@@ -22,7 +22,7 @@ leaconfig=list(srcdir=d)
 leaconfig$rootdir=findDirFromList("~/projects/DrosophilidDBM",msg="Unable to locate root directory for DrosophilidDBM")
 
 leaconfig$startup=file.path(leaconfig$srcdir,"LeaStartup.R")
-leaconfig$dbdir=file.path(dirname(leaconfig$srcdir),"db")source("LeaStartup.R", chdir = TRUE)
+leaconfig$dbdir=file.path(dirname(leaconfig$srcdir),"db")
 
 leaconfig$datadir=file.path(dirname(leaconfig$srcdir),"data")
 leaconfig$FunctionFiles=list.files(leaconfig$srcdir,patt="Functions",full=T,recurs=T)
