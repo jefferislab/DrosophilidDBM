@@ -1,6 +1,6 @@
-CMTKLevelset<-function(fin,fout,args='--binarize'){
+CMTKLevelset<-function(fin,fout,args='--binarize',...){
 	cmd=paste("levelset",args,shQuote(fin),shQuote(fout))
-	rval=system(cmd)
-	if(rval!=0) stop("Levelset failed")
+	success=RunCmdForNewerInput(cmd,fin,fout,...)
+	if(!success) stop("Levelset failed")
 	return(fout)
 }
