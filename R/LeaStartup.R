@@ -1,0 +1,41 @@
+# Set paths etc for fly circuit
+findDirFromList<-function(dirs,msg="Unable to find any directories"){
+	dirs=normalizePath(dirs)
+	for(d in dirs){
+		if(file.exists(d)) return(d)
+	}
+	stop(msg)
+}
+
+a=attr(body(function() {}),'srcfile')
+if(is.null(a)) {
+  d=findDirFromList("~/projects/DrosophilidDBM/R")
+} else {
+  d=dirname(a$filename)
+}
+fcconfig$srcdir=d
+
+# set root directory
+fcconfig$rootdir=findDirFromList("~/projects/DrosophilidDBM"),msg="Unable to locate root directory for DrosophilidDBM")
+
+fcconfig$startup=file.path(fcconfig$srcdir,"LeaStartup.R")
+fcconfig$dbdir=file.path(dirname(fcconfig$srcdir),"db")
+fcconfig$datadir=file.path(dirname(fcconfig$srcdir),"data")
+fcconfig$FunctionFiles=list.files(fcconfig$srcdir,patt="Functions",full=T,recurs=T)
+
+for (MyPath in fcconfig$FunctionFiles) {
+	try(source(MyPath))
+}
+
+findExecutable<-function(exe,extradirs){
+	# quick function to find an executable file
+	if(!missing(extradirs)) {
+		extrapaths=file.path(extradirs,exe)
+		exeexists=file.exists(extrapaths)
+		if(any(exeexists)) return(extrapaths[exeexists][1])
+	}
+	cmd=paste("which",shQuote(exe))
+	whichres=system(cmd)
+	if(whichres==0) system(cmd,intern=TRUE) 
+	else NULL
+}
