@@ -13,17 +13,17 @@ if(is.null(a)) {
 } else {
   d=dirname(a$filename)
 }
-fcconfig$srcdir=d
+leaconfig=list(srcdir=d)
 
 # set root directory
-fcconfig$rootdir=findDirFromList("~/projects/DrosophilidDBM"),msg="Unable to locate root directory for DrosophilidDBM")
+leaconfig$rootdir=findDirFromList("~/projects/DrosophilidDBM",msg="Unable to locate root directory for DrosophilidDBM")
 
-fcconfig$startup=file.path(fcconfig$srcdir,"LeaStartup.R")
-fcconfig$dbdir=file.path(dirname(fcconfig$srcdir),"db")
-fcconfig$datadir=file.path(dirname(fcconfig$srcdir),"data")
-fcconfig$FunctionFiles=list.files(fcconfig$srcdir,patt="Functions",full=T,recurs=T)
+leaconfig$startup=file.path(leaconfig$srcdir,"LeaStartup.R")
+leaconfig$dbdir=file.path(dirname(leaconfig$srcdir),"db")
+leaconfig$datadir=file.path(dirname(leaconfig$srcdir),"data")
+leaconfig$FunctionFiles=list.files(leaconfig$srcdir,patt="Functions",full=T,recurs=T)
 
-for (MyPath in fcconfig$FunctionFiles) {
+for (MyPath in leaconfig$FunctionFiles) {
 	try(source(MyPath))
 }
 
