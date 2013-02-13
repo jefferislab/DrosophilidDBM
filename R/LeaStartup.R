@@ -1,5 +1,3 @@
-# Start by sourcing Greg's AnalysisSuite functions
-source("~/projects/AnalysisSuite/R/Code/Startup.R")
 
 # Set paths etc for fly circuit
 findDirFromList<-function(dirs,msg="Unable to find any directories"){
@@ -43,6 +41,9 @@ findExecutable<-function(exe,extradirs){
 	if(whichres==0) system(cmd,intern=TRUE) 
 	else NULL
 }
+
+# Start by sourcing Greg's AnalysisSuite functions
+source("~/projects/AnalysisSuite/R/Code/Startup.R")
 
 # leave a sensible working directory
 setwd(leaconfig$rootdir)
