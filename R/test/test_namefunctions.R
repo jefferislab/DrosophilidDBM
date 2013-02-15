@@ -7,4 +7,8 @@ test_that("brain_from_path returns a brain for some test paths", {
 	
 	reg="/Volumes/teraraid/flybrain/Aaron/SkeletonRegistrationFolder/DsimDBM/Registration/warp/DsimIS1_AAGS2-1-AAGS2-2-stitched_01_warp_m0g80c8e1e-1x26r4.list"
 	expect_that(brain_from_path(reg),equals('AAGS2'))
+
+	
+	expect_that(brain_from_path(c(path,reg)),equals(c('AAGS2','AAGS2')),
+	'check that we can operate on multiple paths at once')
 })
