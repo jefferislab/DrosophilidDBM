@@ -10,3 +10,7 @@ brain_from_path<-function(path){
 	# now go up to first -
 	sub("^([^-]+)-.*","\\1",trimmedfile)
 }
+
+slide_from_brain<-function(brain){
+	sub("^([A-Z]{3,5}).*","\\1",brain)
+}

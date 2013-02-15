@@ -16,3 +16,8 @@ test_that("brain_from_path returns a brain for some test paths", {
 	expect_that(brain_from_path(image),equals("AAGT2"),
 	'check that we can cope with image (without template prefix)')
 })
+
+test_that("slide_from_brain returns slide",{
+	brain='AAGV20'
+	expect_that(slide_from_brain(brain),equals("AAGV"))
+})
