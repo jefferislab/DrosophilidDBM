@@ -11,4 +11,8 @@ test_that("brain_from_path returns a brain for some test paths", {
 	
 	expect_that(brain_from_path(c(path,reg)),equals(c('AAGS2','AAGS2')),
 	'check that we can operate on multiple paths at once')
+	
+	image="AAGT2-1-AAGT2-2-stitched_01.nrrd"
+	expect_that(brain_from_path(image),equals("AAGT2"),
+	'check that we can cope with image (without template prefix)')
 })
