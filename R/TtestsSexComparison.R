@@ -7,7 +7,7 @@ if(!file.exists(leaconfig$Dsim$IS1.stats))
 
 # load spreadsheet with sexes
 
-leaconfig$Dsim$brains=read.table(file.path(leaconfig$rootdir,"Dsimulans",'DsimBrains.txt'),header=T)
+leaconfig$Dsim$brains=read.table(file.path(leaconfig$rootdir,"db",'DsimBrains.txt'),header=T)
 rownames(leaconfig$Dsim$brains)=leaconfig$Dsim$brains$brain
 
 # list the full path to jacobians
