@@ -1,0 +1,5 @@
+source("LeaStartup.R", chdir = TRUE)
+setwd(file.path(getwd(),"R"))
+source("DownsampledTemplates.R", chdir = TRUE)
+source("JacobiansSexComparison.R", chdir = TRUE)
+source("TtestsSexComparison.R", chdir = TRUE)
