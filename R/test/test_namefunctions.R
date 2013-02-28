@@ -5,9 +5,12 @@ test_that("brain_from_path returns a brain for some test paths", {
 	brain="AAGS2"
 	expect_that(brain_from_path(path),equals(brain))
 	
+	reg="/Volumes/teraraid/flybrain/Aaron/SkeletonRegistrationFolder/DsimDBM/Registration/warp/DsimIS1_AAGS22-1-AAGS22-2-stitched_01_warp_m0g80c8e1e-1x26r4.list"
+	expect_that(brain_from_path(reg),equals('AAGS22'),
+	"check that it can deal with two numbers in the imagename -> neede for the Dvir where some are AAGH22 etc")
+	
 	reg="/Volumes/teraraid/flybrain/Aaron/SkeletonRegistrationFolder/DsimDBM/Registration/warp/DsimIS1_AAGS2-1-AAGS2-2-stitched_01_warp_m0g80c8e1e-1x26r4.list"
 	expect_that(brain_from_path(reg),equals('AAGS2'))
-
 	
 	expect_that(brain_from_path(c(path,reg)),equals(c('AAGS2','AAGS2')),
 	'check that we can operate on multiple paths at once')
