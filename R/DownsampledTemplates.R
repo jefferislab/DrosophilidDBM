@@ -38,5 +38,18 @@ NrrdResample(leaconfig$Dmel$IS1,leaconfig$Dmel$IS1.2um,voxdims=c(2,2,2))
 leaconfig$Dmel$IS1.2um.mask=sub(".nrrd","_mask.nrrd",leaconfig$Dmel$IS1.2um)
 CMTKLevelset(leaconfig$Dmel$IS1.2um,leaconfig$Dmel$IS1.2um.mask)
 
+# D yakuba 
+# NB the data for this are not yet in the locations specified here (don't exist yet)
+###########
+
+leaconfig$Dyak$IS1=file.path(leaconfig$rootdir,"Dyakuba",'DyakIS/FBIS1.nrrd')
+leaconfig$Dyak$IS1.2um=file.path(leaconfig$rootdir,"Dyakuba",'DyakIS/FBIS1_2um.nrrd')
+
+# make a downsampled template brain
+NrrdResample(leaconfig$Dyak$IS1,leaconfig$Dyak$IS1.2um,voxdims=c(2,2,2))
+# use cmtk levelset tool to make a binary mask
+
+leaconfig$Dyak$IS1.2um.mask=sub(".nrrd","_mask.nrrd",leaconfig$Dyak$IS1.2um)
+CMTKLevelset(leaconfig$Dyak$IS1.2um,leaconfig$Dyak$IS1.2um.mask)
 
 
