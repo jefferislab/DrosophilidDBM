@@ -1,4 +1,4 @@
-#asymmetric template brains
+#symmetric template brains
 
 # Dsimulans
 ###########
