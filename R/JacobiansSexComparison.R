@@ -46,7 +46,7 @@ if(!file.exists(leaconfig$Dmel$IS1.jacs))
 # nb sample randomises order of registration directories
 # to avoid competition when multiple jobs are running this script
 for(thisreg in sample(dir(leaconfig$Dmel$IS1.reg,patt='\\.list$',full=T))){
-	CMTKJacobian(target=leaconfig$Dvir$IS1.2um.mask,reg=thisreg,fout=leaconfig$Dvir$IS1.jacs,UseLock=TRUE)
+	CMTKJacobian(target=leaconfig$Dmel$IS1.2um.mask,reg=thisreg,fout=leaconfig$Dmel$IS1.jacs,UseLock=TRUE)
 }
 
 # Dyakuba - can't use yet since files don't exist yet 
