@@ -71,7 +71,7 @@ CMTKLevelset(leaconfig$Dmel$Fsym.2um,leaconfig$Dmel$Fsym.2um.mask)
 
 # for male
 
-leaconfig$Dmel$Msym=file.path(leaconfig$rootdir,"Dmelanogaster",'DmelMsym/refbrain/DmelMsym.nrrd')
+leaconfig$Dmel$Msym=file.path(leaconfig$rootdir,"Dmelanogaster",'DmelMsym/refbrain/Dmelm-1.nrrd')
 leaconfig$Dmel$Msym.2um=file.path(leaconfig$rootdir,"Dmelanogaster",'DmelMsym/refbrain/DmelMsym_2um.nrrd')
 
 # make a downsampled template brain
