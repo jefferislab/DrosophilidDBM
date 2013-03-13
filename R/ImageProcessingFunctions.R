@@ -45,3 +45,22 @@ CMTKTtest<-function(group1,group2,out.stem,mask=NULL,log=TRUE,args='',...){
 	something_happened=RunCmdForNewerInput(cmd,c(group1,group2,mask),c(out.tvals,out.pvals),...)
 	return(c(out.pvals=out.pvals,out.tvals=out.tvals))
 }
+
+#' Compute t values for permuted groups (to establish null distribution)
+CMTKTtest.Perm<-function(group1,group2,quantiles=c(0,0.001,0.01,0.05,0.1,0.5,0.9,.95,.99,.999,1),...){
+	both=c(group1,group2)
+	fakemales=sample(both,length(group1))
+	fakefemales=setdiff(both,fakemales)
+	tempstem=tempfile()
+	# run one fake t test
+	rvals=CMTKTtest(fakemales,fakefemales,
+		out.stem=tempstem,...)
+	# read in t values
+	tvals.fake=Read3DDensityFromNrrd(rvals['out.tvals'])
+	# clean up output files
+	unlink(c(rvals['out.tvals'],rvals['out.pvals']))
+	# remove infinite values
+	tvals.fake[!is.finite(tvals.fake)]=NA
+	# calculate our preferred quantiles
+	quantile(tvals.fake,quantiles,na.rm=T)
+}
