@@ -10,8 +10,5 @@ SCRIPTDIR=`dirname $CURDIR`/R
 # change directory to current script dir (RunPipeline.R likes this)
 cd $SCRIPTDIR
 
-PIPELINESCRIPT="$SCRIPTDIR/RunPipeline.R"
-PERMSCRIPT="$SCRIPTDIR/TtestsSexComparisonPermTest.R"
-
 # concatente the two scripts and pipe them to R
-cat $PIPELINESCRIPT $PERMSCRIPT | R --no-save --interactive 
+cat RunPipeline.R TtestsSexComparisonPermTest.R | R --no-save --interactive 
