@@ -21,7 +21,7 @@ leaconfig$rootdir=findDirFromList("~/projects/DrosophilidDBM",msg="Unable to loc
 
 leaconfig$startup=file.path(leaconfig$srcdir,"LeaStartup.R")
 leaconfig$dbdir=file.path(dirname(leaconfig$srcdir),"db")
-leaconfig$datadir=file.path(dirname(leaconfig$rootdir),"data")
+leaconfig$datadir=file.path(leaconfig$rootdir,"data")
 if(!file.exists(leaconfig$datadir))
 	dir.create(leaconfig$datadir)
 
