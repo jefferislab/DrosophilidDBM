@@ -12,16 +12,19 @@ CMTKLevelset<-function(fin,fout,args='--binarize --levelset-threshold 2',...){
 #' if reg is /path/to/some/regs/myreg.list
 #' and fout is /some/other/path/jacs
 #' /some/other/path/jacs/myreg_jac.nrrd
+#' Note that reg can be passed _more_ than one registration
+#' in which these will be concatenated
 CMTKJacobian<-function(target,reg,fout,args='',targetIsMask=TRUE,...){
 	#if(missing(fout)) fout=sub("\\.list$","_jac.nrrd",basename(reg))
 	if(length(fout)==1 && file.info(fout)$isdir){
 		# if reg is /path/to/some/regs/myreg.list
 		# and fout is /some/other/path/jacs
 		# /some/other/path/jacs/myreg_jac.nrrd
-		fout=file.path(fout,sub("\\.list$","_jac.nrrd",basename(reg)))
+		fout=file.path(fout,sub("\\.list$","_jac.nrrd",basename(reg[1])))
 	}
 	if(targetIsMask) args=paste(args,"--mask")
-	cmd=paste("reformatx","--outfile",shQuote(fout),args,shQuote(target), "--jacobian",shQuote(reg))
+	regs=paste(shQuote(reg),collapse=' ')
+	cmd=paste("reformatx","--outfile",shQuote(fout),args,shQuote(target), "--jacobian",regs)
 	something_happened=RunCmdForNewerInput(cmd,c(reg,target),fout,...)
 	return(fout)
 }
@@ -63,4 +66,10 @@ CMTKTtest.Perm<-function(group1,group2,quantiles=c(0,0.001,0.01,0.05,0.1,0.5,0.9
 	tvals.fake[!is.finite(tvals.fake)]=NA
 	# calculate our preferred quantiles
 	quantile(tvals.fake,quantiles,na.rm=T)
+}
+
+NeuropilStats<-function(jacsfile,mask,masklabels,...){
+	stats=CMTKStatistics(jacsfile,mask,...)
+	rownames(stats)=names(jfrcmaterials)[stats$MaskLevel+1]
+	stats
 }
