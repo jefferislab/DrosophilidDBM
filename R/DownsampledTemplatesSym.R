@@ -32,7 +32,7 @@ CMTKLevelset(leaconfig$Dsim$Msym.2um,leaconfig$Dsim$Msym.2um.mask)
 
 # for female
 
-leaconfig$Dvir$Fsym=file.path(leaconfig$rootdir,"Dvirilis",'DvirFsym/refbrain/Dvirf-1.nrrd')
+leaconfig$Dvir$Fsym=file.path(leaconfig$rootdir,"Dvirilis",'DvirFsym/refbrain/DvirFsym.nrrd')
 leaconfig$Dvir$Fsym.2um=file.path(leaconfig$rootdir,"Dvirilis",'DvirFsym/refbrain/DvirFsym_2um.nrrd')
 
 # make a downsampled template brain
@@ -71,7 +71,7 @@ CMTKLevelset(leaconfig$Dmel$Fsym.2um,leaconfig$Dmel$Fsym.2um.mask)
 
 # for male
 
-leaconfig$Dmel$Msym=file.path(leaconfig$rootdir,"Dmelanogaster",'DmelMsym/refbrain/DmelMsym.nrrd')
+leaconfig$Dmel$Msym=file.path(leaconfig$rootdir,"Dmelanogaster",'DmelMsym/refbrain/Dmelm-1.nrrd')
 leaconfig$Dmel$Msym.2um=file.path(leaconfig$rootdir,"Dmelanogaster",'DmelMsym/refbrain/DmelMsym_2um.nrrd')
 
 # make a downsampled template brain
