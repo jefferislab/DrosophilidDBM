@@ -45,3 +45,23 @@ CMTKTtest<-function(group1,group2,out.stem,mask=NULL,log=TRUE,args='',...){
 	something_happened=RunCmdForNewerInput(cmd,c(group1,group2,mask),c(out.tvals,out.pvals),...)
 	return(c(out.pvals=out.pvals,out.tvals=out.tvals))
 }
+
+#' Zap non finite values in a nrrd (replacing with NA by default)
+#'
+#' 
+NrrdZapInfinites<-function(infile,outfile=NULL,replacement=NA,gzip=TRUE,
+	output=c('update','always'),DryRun=FALSE,...){
+	cmd=ifelse(gzip,"NRRD_DEFAULT_WRITE_ENCODING_TYPE=gz","")
+	if(is.na(replacement)) replacement='NaN'
+	output=match.arg(output)
+	if(is.null(outfile)){
+		outfile=sub("(\\.[^.]+)",'-NA\\1',infile)
+	} else if(file.info(outfile)$isdir){
+		outfile=file.path(outfile,basename(infile))
+	}
+	cmd=paste(cmd,'unu 2op exists',shQuote(infile),replacement,'-o',shQuote(outfile))
+	if(DryRun) return(cmd)
+	if(output=='update') something_happened=RunCmdForNewerInput(cmd,infile,outfile,...)
+	else success=system(cmd)
+	return(outfile)
+}
