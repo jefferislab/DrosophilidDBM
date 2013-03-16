@@ -46,7 +46,6 @@ CMTKTtest<-function(group1,group2,out.stem,mask=NULL,log=TRUE,args='',...){
 	return(c(out.pvals=out.pvals,out.tvals=out.tvals))
 }
 
-<<<<<<< HEAD
 #' Zap non finite values in a nrrd (replacing with NA by default)
 #'
 #' 
@@ -66,7 +65,7 @@ NrrdZapInfinites<-function(infile,outfile=NULL,replacement=NA,gzip=TRUE,
 	else success=system(cmd)
 	return(outfile)
 }
-=======
+
 #' Compute t values for permuted groups (to establish null distribution)
 CMTKTtest.Perm<-function(group1,group2,quantiles=c(0,0.001,0.01,0.05,0.1,0.5,0.9,.95,.99,.999,1),...){
 	both=c(group1,group2)
@@ -85,4 +84,3 @@ CMTKTtest.Perm<-function(group1,group2,quantiles=c(0,0.001,0.01,0.05,0.1,0.5,0.9
 	# calculate our preferred quantiles
 	quantile(tvals.fake,quantiles,na.rm=T)
 }
->>>>>>> 838fc831bd3b05bd89ec20251dcbd1a8b6925749
