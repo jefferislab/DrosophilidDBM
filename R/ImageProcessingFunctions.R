@@ -46,6 +46,26 @@ CMTKTtest<-function(group1,group2,out.stem,mask=NULL,log=TRUE,args='',...){
 	return(c(out.pvals=out.pvals,out.tvals=out.tvals))
 }
 
+#' Zap non finite values in a nrrd (replacing with NA by default)
+#'
+#' 
+NrrdZapInfinites<-function(infile,outfile=NULL,replacement=NA,gzip=TRUE,
+	output=c('update','always'),DryRun=FALSE,...){
+	cmd=ifelse(gzip,"NRRD_DEFAULT_WRITE_ENCODING_TYPE=gz","")
+	if(is.na(replacement)) replacement='NaN'
+	output=match.arg(output)
+	if(is.null(outfile)){
+		outfile=sub("(\\.[^.]+)",'-NA\\1',infile)
+	} else if(file.info(outfile)$isdir){
+		outfile=file.path(outfile,basename(infile))
+	}
+	cmd=paste(cmd,'unu 2op exists',shQuote(infile),replacement,'-o',shQuote(outfile))
+	if(DryRun) return(cmd)
+	if(output=='update') something_happened=RunCmdForNewerInput(cmd,infile,outfile,...)
+	else success=system(cmd)
+	return(outfile)
+}
+
 #' Compute t values for permuted groups (to establish null distribution)
 CMTKTtest.Perm<-function(group1,group2,quantiles=c(0,0.001,0.01,0.05,0.1,0.5,0.9,.95,.99,.999,1),...){
 	both=c(group1,group2)
