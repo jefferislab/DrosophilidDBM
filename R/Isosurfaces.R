@@ -39,9 +39,9 @@ ReformatImage(floating='/Volumes/LeaHD/DrosophilidDBM/Dvirilis/DvirDBM/stats/MF-
 
 
 # get t values of the registrations to the IS-template
-tvals.Dvir=Read3DDensityFromNrrd("/Volumes/LeaHD/DrosophilidDBM/Dvirilis/DvirDBM/stats/MF-tvals.nrrd")
+tvals.Dvir=Read3DDensityFromNrrd("/Volumes/LeaHD/DrosophilidDBM/Dvirilis/DvirDBM/stats/DmelIS1_MF-tvals.nrrd")
 # convert infinite t-values (esp. those outside the mask) to NAs so Amira can deal with it
 tvals.Dvir[!is.finite(tvals.Dvir)]=NA
-Write3DDensityToNrrd(filename='/Volumes/LeaHD/DrosophilidDBM/Dvirilis/DvirDBM/stats/MF-tvals-NA.nrrd',tvals.Dvir)
+Write3DDensityToNrrd(filename='/Volumes/LeaHD/DrosophilidDBM/Dvirilis/DvirDBM/stats/DmelIS1_MF-tvals.nrrd',tvals.Dvir)
 
 
