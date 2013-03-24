@@ -1,39 +1,33 @@
-# note: this needs cleaning up, I just safed it in case R crashes
+# note: this script does not make much sense yet. 
 ###############
 
-Dsim
- [1] 0.003639704 0.003062772 0.003543417 0.003718595 0.004034699 0.003449332 0.004018754 0.003432362 0.004003872 0.003662710 0.004498809 0.003858188 0.004345253
-[14] 0.003672849 0.003548364 0.003619227 0.004433177 0.004665915 0.004726076 0.004364764 0.004247093 0.003653963 0.003939558 0.003810975 0.004263561 0.004295185
-[27] 0.003846557 0.003824684 0.003426294 0.004065408 0.003666360 0.003702653
-> vals-c(Dsim,Dmel)
-Error: object 'vals' not found
-> allvals-c(Dsim,Dmel)
-Error: object 'allvals' not found
-> allvals=c(Dsim,Dmel)
-> allvals
- [1] 0.003639704 0.003062772 0.003543417 0.003718595 0.004034699 0.003449332 0.004018754 0.003432362 0.004003872 0.003662710 0.004498809 0.003858188 0.004345253
-[14] 0.003672849 0.003548364 0.003619227 0.004433177 0.004665915 0.004726076 0.004364764 0.004247093 0.003653963 0.003939558 0.003810975 0.004263561 0.004295185
-[27] 0.003846557 0.003824684 0.003426294 0.004065408 0.003666360 0.003702653 0.004053007 0.004574718 0.004386640 0.004847921 0.003413660 0.004205307 0.004606074
-[40] 0.004607145 0.004925352 0.004929303 0.005047026 0.004860348 0.004009998 0.005079614 0.003648735 0.005816878 0.004728213 0.005214596 0.005259748 0.005355250
-[53] 0.004600604 0.004955283 0.004800887 0.004901276 0.005000924 0.005477459 0.005061733 0.004824892 0.004809030 0.004414609 0.004790336 0.005134332
-> 
-> fakeDsimIdxs=sample(length(allvals))
-> fakeDsimIdxs 
- [1]  4 30 22 64 37 18 58  7 16 10 39 61 48 15 12 49  3 26 51 55 32 21  8 52 45 40 29  1 59 42 31 25  2 56 34  6 46 20 27 44 62 36 23 53 38 50 19 60 63 47  5 28
-[53] 43 35 57 11  9 17 54 41 13 14 24 33
-> fakeDmelIdxs=setsdiff(1:length(allvals))
-Error: could not find function "setsdiff"
-> fakeDmelIdxs=setdiff(1:length(allvals))
-Error in as.vector(y) : argument "y" is missing, with no default
-> fakeDmelIdxs=setdiff(1:length(allvals), fakeDsimIdxs)
-> fakeDmelIdxs 
-integer(0)
-> 1:length(allvals)
- [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52
-[53] 53 54 55 56 57 58 59 60 61 62 63 64
-> fakeDsimIdxs
- [1]  4 30 22 64 37 18 58  7 16 10 39 61 48 15 12 49  3 26 51 55 32 21  8 52 45 40 29  1 59 42 31 25  2 56 34  6 46 20 27 44 62 36 23 53 38 50 19 60 63 47  5 28
-[53] 43 35 57 11  9 17 54 41 13 14 24 33
-> fakeDsimIdxs=sample(length(allvals),size=length(Dsim))
-> fakeDsimIdxs
- [1] 14 25 55 34 21 59 56 13  6 50 26 54 24 23 45 42  9  8 17  4 31 48 57 44 61 62 63 41 53 22 19 37
+# NB Pipeline must be run first to set up variables
+# source("RunPipeline.R", chdir = TRUE)
+# source("NeuropilVolumes.R first, chdir = TRUE")
+
+# Dsimulans
+###########
+
+# if pipeline and NeuropilVolumes.R is run this should be set up:
+# compute the region statistics for all Dsim and Dmel sample brains compared to JRFC2_template
+# Dsim=sapply(npvols$Dsim$DmelIS1,function(df) df[np_region,'sum']/sum(df[-1,'sum']))
+# Dmel=sapply(npvols$Dmel$IS1,function(df) df[np_region,'sum']/sum(df[-1,'sum']))
+
+# get region statistics from all the sample brains
+allvals=c(Dsim,Dmel)
+# randomly permute allvals
+fakeIdxs=sample(length(allvals))
+fakeDsimIdxs=sample(length(allvals),size=length(Dsim))
+
+
+outfile=file.path(leaconfig$datadir,'DsimRegionPerms.rda')
+
+if(RunCmdForNewerInput(NULL,leaconfig$datadir,outfile)){
+	# we have some work to do
+	set.seed(42)
+	results=replicate(1000,CMTKTtest.Perm(fakeDsimIdxs,fakeDmelIdxs,
+		mask=leaconfig$Dmel$IS1.2um.neuropilmask))
+	save(results,file=outfile)
+}
+
+
