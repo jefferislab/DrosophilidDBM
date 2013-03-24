@@ -90,6 +90,6 @@ CMTKTtest.Perm<-function(group1,group2,quantiles=c(0,0.001,0.01,0.05,0.1,0.5,0.9
 
 NeuropilStats<-function(jacsfile,mask,masklabels,...){
 	stats=CMTKStatistics(jacsfile,mask,...)
-	rownames(stats)=names(jfrcmaterials)[stats$MaskLevel+1]
+	rownames(stats)=names(masklabels)[stats$MaskLevel+1]
 	stats
 }
