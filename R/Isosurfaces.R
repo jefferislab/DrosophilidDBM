@@ -18,7 +18,8 @@ source("TtestsSexComparison.R", chdir = TRUE)
 ReformatImage(floating='/Volumes/LeaHD/DrosophilidDBM/Dsimulans/DsimDBM/stats/MF-tvals.nrrd',target='/Volumes/LeaHD/DrosophilidDBM/Dmelanogaster/DmelDBM/refbrain/DmelIS1_2um.nrrd',registrations='/Volumes/LeaHD/DrosophilidDBM/Dmelanogaster/FBIS1_Bridging/Registration/warp/FBIS1_DsimIS1_01_warp_m0g80c4e1e-1x26r3.list',output='/Volumes/LeaHD/DrosophilidDBM/Dsimulans/DsimDBM/stats/DmelIS1_MF-tvals.nrrd')
 
 # get t values of the registrations to the IS-template
-tvals.Dsim=Read3DDensityFromNrrd("/Volumes/LeaHD/DrosophilidDBM/Dsimulans/DsimDBM/stats/MF-tvals.nrrd")
+# NB i just corrected MF-tvals to DmelIS1_MF-tvals
+tvals.Dsim=Read3DDensityFromNrrd("/Volumes/LeaHD/DrosophilidDBM/Dsimulans/DsimDBM/stats/DmelIS1_MF-tvals.nrrd")
 # image.gjdens(tvals.Dsim[,,35])
 # convert infinite t-values (esp. those outside the mask) to NAs so Amira can deal with it
 tvals.Dsim[!is.finite(tvals.Dsim)]=NA
