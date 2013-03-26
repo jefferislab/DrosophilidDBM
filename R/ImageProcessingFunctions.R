@@ -89,7 +89,14 @@ CMTKTtest.Perm<-function(group1,group2,quantiles=c(0,0.001,0.01,0.05,0.1,0.5,0.9
 }
 
 NeuropilStats<-function(jacsfile,mask,masklabels,...){
-	stats=CMTKStatistics(jacsfile,mask,...)
-	rownames(stats)=names(masklabels)[stats$MaskLevel+1]
-	stats
+	fout=paste(jacsfile,sep="","-",basename(mask),'.rds')
+	update_required=RunCmdForNewerInput(NULL,c(jacsfile,mask),fout,...)
+	if(update_required){
+		stats=CMTKStatistics(jacsfile,mask,...)
+		rownames(stats)=names(masklabels)[stats$MaskLevel+1]
+		saveRDS(stats,file=fout)
+	} else {
+		stats=readRDS(fout)
+	}
+	return(stats)
 }
