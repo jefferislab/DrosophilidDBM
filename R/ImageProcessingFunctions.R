@@ -100,3 +100,23 @@ NeuropilStats<-function(jacsfile,mask,masklabels,...){
 	}
 	return(stats)
 }
+
+#' Take a single slice from 3d density, keeping physical dimensions
+slice.gjdens<-function(x,slice,slicedim='z'){
+	ndims=length(dim(x))
+    if(is.character(slicedim)){
+        slicedim=tolower(slicedim)
+        slicedim=which(letters==slicedim)-which(letters=="x")+1
+    }
+	if(ndims<3) {
+		stop("3D arrays only in slice.gjdens - no z axis in array")
+	}
+	if(slicedim!=3) stop("I only know how to return xy slices")
+	rval=x[,,slice]
+	attributeNamesToCopy=setdiff(names(attributes(x)),names(attributes(rval)))
+    attributes(rval)=c(attributes(rval),attributes(x)[attributeNamesToCopy])
+	# ... and set the SliceDim to the correct letter
+	sliceDimChar=letters[23+slicedim]
+    attr(rval,'SliceDim')=if(!is.na(sliceDimChar)) sliceDimChar else slicedim
+    rval
+}
