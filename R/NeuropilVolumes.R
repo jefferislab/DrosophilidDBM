@@ -2,14 +2,13 @@
 # jacobian determinant volumes AND FBIS1_JFRC2 neuropil mask
 source(file.path(leaconfig$srcdir,"JFRCMaterials.R"))
 
+leaconfig$Dmel$IS1.2um.neuropilmask=file.path(leaconfig$rootdir,'FBIS1_Bridging/masks/FBIS12um_JFRC2.mask.nrrd')
+
 npvols=list()
 npvols$Dmel$IS1=lapply(leaconfig$Dmel$IS1.jacfiles,NeuropilStats,
 	mask=leaconfig$Dmel$IS1.2um.neuropilmask,
 	masklabels=jfrcmaterials)
 
-leaconfig$Dmel$IS1.2um.neuropilmask=file.path(leaconfig$rootdir,'FBIS1_Bridging/masks/FBIS12um_JFRC2.mask.nrrd')
-# make jacobians for bridging registrations
-# Dsimulans
 
 ############
 # Dvirilis #
@@ -22,6 +21,10 @@ if(!file.exists(leaconfig$Dvir$FBIS1bridging.jacs))
 # this maps the Dvirilis reference brain onto the Dmelanogaster FBIS1 template
 CMTKJacobian(target=leaconfig$Dmel$IS1.2um.mask,reg=leaconfig$Dvir$FBIS1bridging,
 	fout=leaconfig$Dvir$FBIS1bridging.jacs,UseLock=TRUE)
+# CMTKJacobian(target=leaconfig$Dmel$IS1.2um.mask,reg=leaconfig$Dvir$FBIS1bridging,
+#	fout=leaconfig$Dvir$FBIS1bridging.jacs,UseLock=TRUE,args='--no-jacobian-correct-global')
+# comment this out to deal with relative region volumes only.need it to get absolute values of all the
+# regions. e.g. to put them into a table in um. 
 	
 vstats=NeuropilStats(dir(leaconfig$Dvir$FBIS1bridging.jacs,full=TRUE,patt='\\.nrrd$'),
 	mask=leaconfig$Dmel$IS1.2um.neuropilmask,masklabels=jfrcmaterials)
@@ -75,6 +78,7 @@ for(np_region in setdiff(names(jfrcmaterials),c("Exterior",'LOP_R'))){
 	print(t.test(Dvir,Dmel))
 }
 
+
 ############
 # Dsimulans #
 ############
@@ -83,23 +87,30 @@ leaconfig$Dsim$FBIS1bridging.jacs=file.path(leaconfig$rootdir,"FBIS1_Bridging",'
 if(!file.exists(leaconfig$Dsim$FBIS1bridging.jacs))
 	dir.create(leaconfig$Dsim$FBIS1bridging.jacs)
 
+# this maps the Dsimulans reference brain onto the Dmelanogaster FBIS1 template
 CMTKJacobian(target=leaconfig$Dmel$IS1.2um.mask,reg=leaconfig$Dsim$FBIS1bridging,
 	fout=leaconfig$Dsim$FBIS1bridging.jacs,UseLock=TRUE)
+# CMTKJacobian(target=leaconfig$Dmel$IS1.2um.mask,reg=leaconfig$Dsim$FBIS1bridging,
+#	fout=leaconfig$Dsim$FBIS1bridging.jacs,UseLock=TRUE,args='--no-jacobian-correct-global')
+# comment this out to deal with relative region volumes only.need it to get absolute values of all the
+# regions. e.g. to put them into a table in um. 
 	
 vstats=NeuropilStats(dir(leaconfig$Dsim$FBIS1bridging.jacs,full=TRUE,patt='\\.nrrd$'),
 	mask=leaconfig$Dmel$IS1.2um.neuropilmask,masklabels=jfrcmaterials)
 
-# drop first row (exterior), 8um^3 is voxel volume
+# drop first row (exterior), 
+# gives the volume of all the non-zero voxels (all voxels*8 since 8um^3 is voxel volume)
 FBIS1.npvol=sum(vstats$n[-1])*8
+# sum calculates the volume of Dsim template (by multiplying each voxel w/ average jacobian det)
 DsimIS1.npvol=sum(vstats$sum[-1])*8
 # e.g. test left lobula in male and female melanogaster
 # but not so interesting really since the DBM lets us do this voxel by voxel!
-LO_L.prop=sapply(npvols$Dmel$IS1,function(df) df['LO_L','sum']/sum(df[-1,'sum']))
-t.test(LO_L.prop~leaconfig$Dmel$IS1.jacfiles.sex)
+# LO_L.prop=sapply(npvols$Dmel$IS1,function(df) df['LO_L','sum']/sum(df[-1,'sum']))
+# t.test(LO_L.prop~leaconfig$Dmel$IS1.jacfiles.sex)
 
 ###########
 # Generate jacobians for Dsim in FBIS1 space
-# we can use these in order to ask if there is a consistent in neuropil volumes
+# we can use these in order to ask if there is a consistent difference in neuropil volumes
 # between Dsim and Dmel
 # NB best to do this in terms of _relative_ neuropil volume not absolute
 
@@ -126,8 +137,8 @@ npvols$Dsim$DmelIS1=lapply(leaconfig$Dsim$DmelIS1.jacfiles,NeuropilStats,
 
 # just one example:
 # calculate proportion of total neuropil occupied by Left lobula
-Dsim.LO_L.prop=sapply(npvols$Dsim$DmelIS1,function(df) df['LO_L','sum']/sum(df[-1,'sum']))
-t.test(LO_L.prop,Dsim.LO_L.prop)
+# Dsim.LO_L.prop=sapply(npvols$Dsim$DmelIS1,function(df) df['LO_L','sum']/sum(df[-1,'sum']))
+# t.test(LO_L.prop,Dsim.LO_L.prop)
 
 # NB we don't want to look at exterior and LOP_R is missing from the mask
 for(np_region in setdiff(names(jfrcmaterials),c("Exterior",'LOP_R'))){
