@@ -11,7 +11,7 @@ leaconfig$Dsim$brains=read.table(file.path(leaconfig$rootdir,"db",'DsimBrains.tx
 rownames(leaconfig$Dsim$brains)=leaconfig$Dsim$brains$brain
 
 # list the full path to jacobians
-leaconfig$Dsim$IS1.jacfiles=dir(leaconfig$Dsim$IS1.jacs,full=T)
+leaconfig$Dsim$IS1.jacfiles=dir(leaconfig$Dsim$IS1.jacs,full=T,patt='\\.nrrd$')
 # figure out sex for each one
 leaconfig$Dsim$IS1.jacfiles.sex=leaconfig$Dsim$brains[brain_from_path(leaconfig$Dsim$IS1.jacfiles),'sex']
 
@@ -31,7 +31,7 @@ leaconfig$Dvir$brains=read.table(file.path(leaconfig$rootdir,"db",'DvirBrains.tx
 rownames(leaconfig$Dvir$brains)=leaconfig$Dvir$brains$brain
 
 # list the full path to jacobians
-leaconfig$Dvir$IS1.jacfiles=dir(leaconfig$Dvir$IS1.jacs,full=T)
+leaconfig$Dvir$IS1.jacfiles=dir(leaconfig$Dvir$IS1.jacs,full=T,patt='\\.nrrd$')
 # figure out sex for each one
 leaconfig$Dvir$IS1.jacfiles.sex=leaconfig$Dvir$brains[brain_from_path(leaconfig$Dvir$IS1.jacfiles),'sex']
 
@@ -52,7 +52,7 @@ leaconfig$Dmel$brains=read.table(file.path(leaconfig$rootdir,"db",'DmelBrains.tx
 rownames(leaconfig$Dmel$brains)=leaconfig$Dmel$brains$brain
 
 # list the full path to jacobians
-leaconfig$Dmel$IS1.jacfiles=dir(leaconfig$Dmel$IS1.jacs,full=T)
+leaconfig$Dmel$IS1.jacfiles=dir(leaconfig$Dmel$IS1.jacs,full=T,patt='\\.nrrd$')
 # figure out sex for each one
 leaconfig$Dmel$IS1.jacfiles.sex=leaconfig$Dmel$brains[brain_from_path(leaconfig$Dmel$IS1.jacfiles),'sex']
 
@@ -72,7 +72,7 @@ leaconfig$Dyak$brains=read.table(file.path(leaconfig$rootdir,"db",'DyakBrains.tx
 rownames(leaconfig$Dyak$brains)=leaconfig$Dyak$brains$brain
 
 # list the full path to jacobians
-leaconfig$Dyak$IS1.jacfiles=dir(leaconfig$Dyak$IS1.jacs,full=T)
+leaconfig$Dyak$IS1.jacfiles=dir(leaconfig$Dyak$IS1.jacs,full=T,patt='\\.nrrd$')
 # figure out sex for each one
 leaconfig$Dyak$IS1.jacfiles.sex=leaconfig$Dyak$brains[brain_from_path(leaconfig$Dyak$IS1.jacfiles),'sex']
 
