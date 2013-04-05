@@ -45,4 +45,18 @@ tvals.Dvir=Read3DDensityFromNrrd("/Volumes/LeaHD/DrosophilidDBM/Dvirilis/DvirDBM
 tvals.Dvir[!is.finite(tvals.Dvir)]=NA
 Write3DDensityToNrrd(filename='/Volumes/LeaHD/DrosophilidDBM/Dvirilis/DvirDBM/stats/DmelIS1_MF-tvals.nrrd',tvals.Dvir)
 
+# for Dyakuba
+# specify the path to the downsampled 4um-IS-template I'm about to generate
+leaconfig$Dyak$IS1.4um=file.path(leaconfig$rootdir,"Dyakuba",'DyakIS/FBIS1_4um.nrrd')
+
+# make the further downsampled template brain for bridging registrations
+NrrdResample(leaconfig$Dyak$IS1,leaconfig$Dmel$IS1.4um,voxdims=c(4,4,4))
+# use cmtk levelset tool to make a binary mask
+source("TtestsSexComparison.R", chdir = TRUE)
+
+# get t values of the registrations to the IS-template
+tvals.Dyak=Read3DDensityFromNrrd("/Volumes/LeaHD/DrosophilidDBM/Dyakuba/DyakDBM/stats/DmelIS1_MF-tvals.nrrd")
+# convert infinite t-values (esp. those outside the mask) to NAs so Amira can deal with it
+tvals.Dyak[!is.finite(tvals.Dyak)]=NA
+Write3DDensityToNrrd(filename='/Volumes/LeaHD/DrosophilidDBM/Dyakuba/DyakDBM/stats/DmelIS1_MF-tvals.nrrd',tvals.Dyak)
 
