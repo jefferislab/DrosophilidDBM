@@ -49,7 +49,7 @@ Write3DDensityToNrrd(filename='/Volumes/LeaHD/DrosophilidDBM/Dvirilis/DvirDBM/st
 # specify the path to the downsampled 4um-IS-template I'm about to generate
 leaconfig$Dyak$IS1.4um=file.path(leaconfig$rootdir,"Dyakuba",'DyakIS/FBIS1_4um.nrrd')
 
-# make the further downsampled template brain for bridging registrations
+# make the further downsampled template brain 
 NrrdResample(leaconfig$Dyak$IS1,leaconfig$Dmel$IS1.4um,voxdims=c(4,4,4))
 # use cmtk levelset tool to make a binary mask
 source("TtestsSexComparison.R", chdir = TRUE)
