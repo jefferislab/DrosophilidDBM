@@ -146,3 +146,54 @@ for(np_region in setdiff(names(jfrcmaterials),c("Exterior",'LOP_R'))){
 	Dmel=sapply(npvols$Dmel$IS1,function(df) df[np_region,'sum']/sum(df[-1,'sum']))
 	print(t.test(Dsim,Dmel))
 }
+
+############
+# Dyakuba #
+############
+
+fout=leaconfig$Dyak$IS1.jacs
+# define fout here because otherwise the saveRDS function within NeuropilStats has problems with compression?
+vstats=NeuropilStats(dir(leaconfig$Dyak$IS1.jacs,full=TRUE,patt='\\.nrrd$'),
+	mask=leaconfig$Dmel$IS1.2um.neuropilmask,masklabels=jfrcmaterials)
+
+# drop first row (exterior), 
+# gives the volume of all the non-zero voxels (all voxels*8 since 8um^3 is voxel volume)
+FBIS1.npvol=sum(vstats$n[-1])*8
+# sum calculates the volume of Dyak template (by multiplying each voxel w/ average jacobian det)
+DyakIS1.npvol=sum(vstats$sum[-1])*8
+# e.g. test left lobula in male and female yak
+# but not so interesting really since the DBM lets us do this voxel by voxel!
+# LO_L.prop=sapply(npvols$Dmel$IS1,function(df) df['LO_L','sum']/sum(df[-1,'sum']))
+# t.test(LO_L.prop~leaconfig$Dmel$IS1.jacfiles.sex)
+
+###########
+# nb we don't have to GENERATE FIRST jacobians for Dyak in FBIS1 space since the yak registration was in FBIS1 space already!
+
+# leaconfig$Dyak$jacs=file.path(leaconfig$rootdir,"Dyakuba",'DyakDBM/jacs')
+# if(!file.exists(leaconfig$Dyak$jacs))
+#	dir.create(leaconfig$Dyak$jacs)
+
+# this would map the Dyakuba reference brain onto the Dmelanogaster FBIS1 template - don't need since the Dyak ref is FBIS1
+# CMTKJacobian(target=leaconfig$Dmel$IS1.2um.mask,reg=leaconfig$Dvir$FBIS1bridging,
+#	fout=leaconfig$Dvir$FBIS1bridging.jacs,UseLock=TRUE)
+# We can now compare the abs or relative (preferred) neuropil volumes for 
+# Dyak vs Dmel
+
+# leaconfig$Dyak$IS1.jacfiles=dir(leaconfig$Dyak$DyakDBM$jacs,full=T,patt='\\.nrrd$')
+
+# first calculate per neuropil region statistics (e.g. average jacobian)
+npvols$Dyak$DmelIS1=lapply(leaconfig$Dyak$DyakDBM$jacs,NeuropilStats,
+	mask=leaconfig$Dmel$IS1.2um.neuropilmask,
+	masklabels=jfrcmaterials)
+
+# just one example:
+# calculate proportion of total neuropil occupied by Left lobula
+# Dyak.LO_L.prop=sapply(npvols$Dyak$DmelIS1,function(df) df['LO_L','sum']/sum(df[-1,'sum']))
+# t.test(LO_L.prop,Dyak.LO_L.prop)
+
+# NB we don't want to look at exterior and LOP_R is missing from the mask
+for(np_region in setdiff(names(jfrcmaterials),c("Exterior",'LOP_R'))){
+	Dyak=sapply(npvols$Dyak$DyakDBM,function(df) df[np_region,'sum']/sum(df[-1,'sum']))
+	Dmel=sapply(npvols$Dmel$IS1,function(df) df[np_region,'sum']/sum(df[-1,'sum']))
+	print(t.test(Dyak,Dmel))
+}
