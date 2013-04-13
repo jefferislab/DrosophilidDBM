@@ -150,9 +150,6 @@ for(np_region in setdiff(names(jfrcmaterials),c("Exterior",'LOP_R'))){
 ############
 # Dyakuba #
 ############
-
-fout=leaconfig$Dyak$IS1.jacs
-# define fout here because otherwise the saveRDS function within NeuropilStats has problems with compression?
 vstats=NeuropilStats(dir(leaconfig$Dyak$IS1.jacs,full=TRUE,patt='\\.nrrd$'),
 	mask=leaconfig$Dmel$IS1.2um.neuropilmask,masklabels=jfrcmaterials)
 
