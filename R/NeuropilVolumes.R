@@ -179,7 +179,7 @@ for(np_region in setdiff(names(jfrcmaterials),c("Exterior",'LOP_R'))){
 # leaconfig$Dyak$IS1.jacfiles=dir(leaconfig$Dyak$DyakDBM$jacs,full=T,patt='\\.nrrd$')
 
 # first calculate per neuropil region statistics (e.g. average jacobian)
-npvols$Dyak$DmelIS1=lapply(leaconfig$Dyak$IS1.jacs,NeuropilStats,
+npvols$Dyak$DmelIS1=lapply(leaconfig$Dyak$IS1.jacfiles,NeuropilStats,
 	mask=leaconfig$Dmel$IS1.2um.neuropilmask,
 	masklabels=jfrcmaterials)
 
