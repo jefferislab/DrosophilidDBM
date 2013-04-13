@@ -190,7 +190,7 @@ npvols$Dyak$DmelIS1=lapply(leaconfig$Dyak$DyakDBM$jacs,NeuropilStats,
 
 # NB we don't want to look at exterior and LOP_R is missing from the mask
 for(np_region in setdiff(names(jfrcmaterials),c("Exterior",'LOP_R'))){
-	Dyak=sapply(npvols$Dyak$DyakDBM,function(df) df[np_region,'sum']/sum(df[-1,'sum']))
+	Dyak=sapply(npvols$Dyak$DmelIS1,function(df) df[np_region,'sum']/sum(df[-1,'sum']))
 	Dmel=sapply(npvols$Dmel$IS1,function(df) df[np_region,'sum']/sum(df[-1,'sum']))
 	print(t.test(Dyak,Dmel))
 }
