@@ -56,7 +56,7 @@ CMTKLevelset(leaconfig$Dmel$IS1.2um,leaconfig$Dmel$IS1.2um.mask)
 
 leaconfig$Dyak$IS1=file.path(leaconfig$rootdir,"Dyakuba",'DyakIS/FBIS1.nrrd')
 leaconfig$Dyak$IS1.2um=file.path(leaconfig$rootdir,"Dyakuba",'DyakIS/FBIS1_2um.nrrd')
-leaconfig$Dmel$IS1.4um=file.path(leaconfig$rootdir,"Dyakuba",'DyakIS/FBIS1_4um.nrrd')
+leaconfig$Dyak$IS1.4um=file.path(leaconfig$rootdir,"Dyakuba",'DyakIS/FBIS1_4um.nrrd')
 
 # make a downsampled template brain
 NrrdResample(leaconfig$Dyak$IS1,leaconfig$Dyak$IS1.2um,voxdims=c(2,2,2))
