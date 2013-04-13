@@ -150,14 +150,14 @@ for(np_region in setdiff(names(jfrcmaterials),c("Exterior",'LOP_R'))){
 ############
 # Dyakuba #
 ############
-vstats=NeuropilStats(dir(leaconfig$Dyak$IS1.jacs,full=TRUE,patt='\\.nrrd$'),
-	mask=leaconfig$Dmel$IS1.2um.neuropilmask,masklabels=jfrcmaterials)
+# vstats=NeuropilStats(dir(leaconfig$Dyak$IS1.jacs,full=TRUE,patt='\\.nrrd$'),
+# 	mask=leaconfig$Dmel$IS1.2um.neuropilmask,masklabels=jfrcmaterials)
 
 # drop first row (exterior), 
 # gives the volume of all the non-zero voxels (all voxels*8 since 8um^3 is voxel volume)
-FBIS1.npvol=sum(vstats$n[-1])*8
+# FBIS1.npvol=sum(vstats$n[-1])*8
 # sum calculates the volume of Dyak template (by multiplying each voxel w/ average jacobian det)
-DyakIS1.npvol=sum(vstats$sum[-1])*8
+# DyakIS1.npvol=sum(vstats$sum[-1])*8
 # e.g. test left lobula in male and female yak
 # but not so interesting really since the DBM lets us do this voxel by voxel!
 # LO_L.prop=sapply(npvols$Dmel$IS1,function(df) df['LO_L','sum']/sum(df[-1,'sum']))
