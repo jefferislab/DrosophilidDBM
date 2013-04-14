@@ -54,4 +54,17 @@ for(np_region in sorted_region_names){
 	npstats$DsimDmel[[np_region]]=oneway.permtest(Dsim,Dmel)
 }
 
+# Dyakuba
+###########
+ 
+# we don't have to calculate the relative and absolute volumes again
+# since we already did that above in the Dvir script 
+npstats$DyakDmel=list()
+# now calculate stats vs Dmel
+for(np_region in sorted_region_names){
+	Dyak=sapply(npvols$Dyak$DmelIS1,function(df) df[np_region,'sum']/sum(df[-1,'sum']))
+	Dmel=sapply(npvols$Dmel$IS1,function(df) df[np_region,'sum']/sum(df[-1,'sum']))
+	npstats$DyakDmel[[np_region]]=oneway.permtest(Dyak,Dmel)
+}
+
 
