@@ -55,8 +55,8 @@ NrrdResample(leaconfig$Dyak$IS1,leaconfig$Dmel$IS1.4um,voxdims=c(4,4,4))
 source("TtestsSexComparison.R", chdir = TRUE)
 
 # get t values of the registrations to the IS-template
-tvals.Dyak=Read3DDensityFromNrrd("/Volumes/LeaHD/DrosophilidDBM/Dyakuba/DyakDBM/stats/DmelIS1_MF-tvals.nrrd")
+tvals.Dyak=Read3DDensityFromNrrd("/Volumes/LeaHD/DrosophilidDBM/Dyakuba/DyakDBM/stats/MF-tvals.nrrd")
 # convert infinite t-values (esp. those outside the mask) to NAs so Amira can deal with it
 tvals.Dyak[!is.finite(tvals.Dyak)]=NA
-Write3DDensityToNrrd(filename='/Volumes/LeaHD/DrosophilidDBM/Dyakuba/DyakDBM/stats/DmelIS1_MF-tvals.nrrd',tvals.Dyak)
+Write3DDensityToNrrd(filename='/Volumes/LeaHD/DrosophilidDBM/Dyakuba/DyakDBM/stats/MF-tvals-NA.nrrd',tvals.Dyak)
 
