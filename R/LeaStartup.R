@@ -17,7 +17,7 @@ if(is.null(a)) {
 leaconfig=list(srcdir=d)
 
 # set root directory
-leaconfig$rootdir=findDirFromList(c("~/projects/DrosophilidDBM","/Volumes/JData/JPeople/Lea/DrosophilidDBM"),
+leaconfig$rootdir=findDirFromList(c("~/projects/DrosophilidDBM", "/Volumes/JData3/JPeople/Lea/DrosophilidDBM", "/Volumes/JData/JPeople/Lea/DrosophilidDBM"),
   msg="Unable to locate root directory for DrosophilidDBM")
 
 leaconfig$startup=file.path(leaconfig$srcdir,"LeaStartup.R")
