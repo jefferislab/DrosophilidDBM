@@ -1,7 +1,3 @@
-cd /Volumes/LeaHD/DrosophilidDBM/R 
-R
-source("LeaStartup.R", chdir = TRUE)
-setwd(file.path(leaconfig$rootdir,"R"))
 
 # needs RunPipeline.R
 
