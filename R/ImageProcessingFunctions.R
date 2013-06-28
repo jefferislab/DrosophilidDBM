@@ -89,7 +89,34 @@ CMTKTtest.Perm<-function(group1,group2,quantiles=c(0,0.001,0.01,0.05,0.1,0.5,0.9
 }
 
 NeuropilStats<-function(jacsfile,mask,masklabels,...){
-	stats=CMTKStatistics(jacsfile,mask,...)
-	rownames(stats)=names(jfrcmaterials)[stats$MaskLevel+1]
-	stats
+	fout=paste(jacsfile,sep="","-",basename(mask),'.rds')
+	update_required=RunCmdForNewerInput(NULL,c(jacsfile,mask),fout,...)
+	if(update_required){
+		stats=CMTKStatistics(jacsfile,mask,...)
+		rownames(stats)=names(masklabels)[stats$MaskLevel+1]
+		saveRDS(stats,file=fout)
+	} else {
+		stats=readRDS(fout)
+	}
+	return(stats)
+}
+
+#' Take a single slice from 3d density, keeping physical dimensions
+slice.gjdens<-function(x,slice,slicedim='z'){
+	ndims=length(dim(x))
+    if(is.character(slicedim)){
+        slicedim=tolower(slicedim)
+        slicedim=which(letters==slicedim)-which(letters=="x")+1
+    }
+	if(ndims<3) {
+		stop("3D arrays only in slice.gjdens - no z axis in array")
+	}
+	if(slicedim!=3) stop("I only know how to return xy slices")
+	rval=x[,,slice]
+	attributeNamesToCopy=setdiff(names(attributes(x)),names(attributes(rval)))
+    attributes(rval)=c(attributes(rval),attributes(x)[attributeNamesToCopy])
+	# ... and set the SliceDim to the correct letter
+	sliceDimChar=letters[23+slicedim]
+    attr(rval,'SliceDim')=if(!is.na(sliceDimChar)) sliceDimChar else slicedim
+    rval
 }

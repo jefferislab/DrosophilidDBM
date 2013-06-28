@@ -49,8 +49,9 @@ for(thisreg in sample(dir(leaconfig$Dmel$IS1.reg,patt='\\.list$',full=T))){
 	CMTKJacobian(target=leaconfig$Dmel$IS1.2um.mask,reg=thisreg,fout=leaconfig$Dmel$IS1.jacs,UseLock=TRUE)
 }
 
-# Dyakuba - can't use yet since files don't exist yet 
-###########
+# Dyakuba NB: the jacobians are will be from a registration of males&females against FBIS1 
+# because I couldn't generate a good quality Dyak refbrain
+##########
 
 leaconfig$Dyak$IS1.reg=file.path(leaconfig$rootdir,"Dyakuba",'DyakDBM/Registration/warp')
 leaconfig$Dyak$IS1.jacs=file.path(leaconfig$rootdir,"Dyakuba",'DyakDBM/jacs')
@@ -61,6 +62,6 @@ if(!file.exists(leaconfig$Dyak$IS1.jacs))
 # nb sample randomises order of registration directories
 # to avoid competition when multiple jobs are running this script
 for(thisreg in sample(dir(leaconfig$Dyak$IS1.reg,patt='\\.list$',full=T))){
-	CMTKJacobian(target=leaconfig$Dyak$IS1.2um.mask,reg=thisreg,fout=leaconfig$Dyak$IS1.jacs,UseLock=TRUE)
+	CMTKJacobian(target=leaconfig$Dmel$IS1.2um.mask,reg=thisreg,fout=leaconfig$Dyak$IS1.jacs,UseLock=TRUE)
 }
 

@@ -35,6 +35,15 @@ test_that("brain_from_path returns a brain for some test paths", {
 	image="AAGT2-1-AAGT2-2-stitched_01.nrrd"
 	expect_that(brain_from_path(image),equals("AAGT2"),
 	'check that we can cope with image (without template prefix)')
+
+	jac='DmelIS_GYLN-1_warp_m0g80c8e1e-1x26r4_jac.nrrd'
+	expect_that(brain_from_path(jac),equals("GYLN"),
+	'check that we can cope with D yakuba jacobian')
+
+	jac='DmelIS_GYLN1-1_warp_m0g80c8e1e-1x26r4_jac.nrrd'
+	expect_that(brain_from_path(jac),equals("GYLN1"),
+	'check that we can cope with D yakuba jacobian')
+	
 })
 
 test_that("slide_from_brain returns slide",{

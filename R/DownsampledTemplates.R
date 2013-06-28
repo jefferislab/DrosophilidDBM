@@ -6,9 +6,12 @@
 leaconfig$Dsim$IS1=file.path(leaconfig$rootdir,"Dsimulans",'DsimDBM/refbrain/DsimIS1.nrrd')
 leaconfig$Dsim$IS1.2um=file.path(leaconfig$rootdir,"Dsimulans",'DsimDBM/refbrain/DsimIS1_2um.nrrd')
 leaconfig$Dsim$IS1.4um=file.path(leaconfig$rootdir,"Dsimulans",'DsimDBM/refbrain/DsimIS1_4um.nrrd')
+leaconfig$Dsim$male=file.path(leaconfig$rootdir,"Dsimulans",'DsimMale/refbrain/AAGX15-6-symmetric.nrrd')
+leaconfig$Dsim$male.2um=file.path(leaconfig$rootdir,"Dsimulans",'DsimMale/refbrain/male2um.nrrd')
 
 # make a downsampled template brain
 NrrdResample(leaconfig$Dsim$IS1,leaconfig$Dsim$IS1.2um,voxdims=c(2,2,2))
+NrrdResample(leaconfig$Dsim$male,leaconfig$Dsim$male.2um,voxdims=c(2,2,2))
 # make a further downsampled template brain for bridging registrations
 NrrdResample(leaconfig$Dsim$IS1,leaconfig$Dsim$IS1.4um,voxdims=c(4,4,4))
 # use cmtk levelset tool to make a binary mask
@@ -53,9 +56,12 @@ CMTKLevelset(leaconfig$Dmel$IS1.2um,leaconfig$Dmel$IS1.2um.mask)
 
 leaconfig$Dyak$IS1=file.path(leaconfig$rootdir,"Dyakuba",'DyakIS/FBIS1.nrrd')
 leaconfig$Dyak$IS1.2um=file.path(leaconfig$rootdir,"Dyakuba",'DyakIS/FBIS1_2um.nrrd')
+leaconfig$Dyak$IS1.4um=file.path(leaconfig$rootdir,"Dyakuba",'DyakIS/FBIS1_4um.nrrd')
 
 # make a downsampled template brain
 NrrdResample(leaconfig$Dyak$IS1,leaconfig$Dyak$IS1.2um,voxdims=c(2,2,2))
+# make a further downsampled template brain for bridging regs
+NrrdResample(leaconfig$Dyak$IS1,leaconfig$Dyak$IS1.4um,voxdims=c(4,4,4))
 # use cmtk levelset tool to make a binary mask
 
 leaconfig$Dyak$IS1.2um.mask=sub(".nrrd","_mask.nrrd",leaconfig$Dyak$IS1.2um)
